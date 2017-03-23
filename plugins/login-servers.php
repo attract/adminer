@@ -14,11 +14,19 @@ class AdminerLoginServers {
 	* @param array array($domain) or array($domain => $description) or array($category => array())
 	* @param string
 	*/
-	function __construct($servers, $driver = "server") {
+	function __construct($servers, $driver = "server", $scripts = array("http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")) {
 		$this->servers = $servers;
 		$this->driver = $driver;
+
+		$this->scripts = $scripts;
 	}
-	
+
+	function head() {
+		foreach ($this->scripts as $script) {
+			echo "<script type='text/javascript' src='" . h($script) . "'></script>\n";
+		}
+	}
+
 	function login($login, $password) {
 		// check if server is allowed
 		foreach ($this->servers as $key => $val) {
@@ -50,9 +58,11 @@ class AdminerLoginServers {
 	<tr><th><?php echo lang('Username'); ?><td><input id="username" name="auth[username]" value="<?php echo h($_GET["username"]);  ?>">
 	<tr><th><?php echo lang('Password'); ?><td><input type="password" name="auth[password]">
 </table>
-<p><input type="submit" value="<?php echo lang('Login'); ?>">
+
+	<p><input type="submit" value="<?php echo lang('Login'); ?>">
+	<?=checkbox("auth[permanent]", 1, $_COOKIE["adminer_permanent"], lang('Permanent login')) . "\n"; ?>
+
 <?php
-		echo checkbox("auth[permanent]", 1, $_COOKIE["adminer_permanent"], lang('Permanent login')) . "\n";
 		return true;
 	}
 	

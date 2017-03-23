@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  adminer-web:
+    build: .
+    environment:
+      - VIRTUAL_HOST=adminer.local
+    network_mode: "bridge"
+    restart: always
+    volumes:
+      - .:/var/www/

@@ -8,15 +8,19 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
 
 # add adminer as the only nginx site
 ADD adminer.nginx.conf /etc/nginx/sites-available/adminer
-RUN ln -s /etc/nginx/sites-available/adminer /etc/nginx/sites-enabled/adminer
+RUN ln -sf /etc/nginx/sites-available/adminer /etc/nginx/sites-enabled/adminer
+RUN ln -sf php.ini /etc/php5/fpm/php.ini
+
 RUN rm /etc/nginx/sites-enabled/default
 
 # install adminer and default theme
 RUN mkdir /var/www
-RUN wget http://www.adminer.org/latest.php -O /var/www/index.php
-RUN wget https://raw.github.com/vrana/adminer/master/designs/hever/adminer.css -O /var/www/adminer.css
+#RUN wget http://www.adminer.org/latest.php -O /var/www/index.php
+#RUN wget https://raw.githubusercontent.com/vrana/adminer/master/designs/brade/adminer.css -O /var/www/adminer.css
+
 WORKDIR /var/www
 RUN chown www-data:www-data -R /var/www
+ADD . /var/www
 
 # tune PHP settings for uploading large dumps
 RUN echo "upload_max_filesize = 2000M" >> /etc/php5/upload_large_dumps.ini \

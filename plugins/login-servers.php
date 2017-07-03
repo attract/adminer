@@ -24,7 +24,7 @@ class AdminerLoginServers {
 			echo "<script type='text/javascript' src='" . h($script) . "'></script>\n";
 		}
 	}
-	
+
 	function login($login, $password) {
 		return;
 	}

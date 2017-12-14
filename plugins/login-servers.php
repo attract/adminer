@@ -46,6 +46,11 @@ class AdminerLoginServers {
         $this->add_connect();
         $this->save_connections_to_file();
         return $this->all_connections;
+
+        return array(array('name'=>"Fiveldb", 'host'=>"148.251.99.194", "env"=>'loc', "driver"=>"pgsql", "port"=>"15432", "user"=>"root",
+            "password"=>"123123"),
+            array('name'=>"Fiveldb", 'host'=>"127.0.0.1", "env"=>'dev', "driver"=>"mysql", "port"=>"3601", "user"=>"root",
+                "password"=>"123123"));
     }
 
     function add_connect(){
@@ -81,13 +86,14 @@ class AdminerLoginServers {
                 foreach ($this->servers as $server) {
                     ?>
                     <tr>
-                        <td><input type="submit" class="connect_to_db" value="<?=$server['host'] ?>"
+                        <td><input type="button" class="connect_to_db" value="<?=$server['name'] ?>"
                                    style="background: yellowgreen; width: 100%"></td>
-                        <td><?=$server['env'] ?></td>
-                        <td><?=$server['driver'] ?></td>
-                        <td><?=$server['port'] ?></td>
-                        <td><?=$server['user'] ?></td>
-                        <td></td>
+                        <td class="env"><?=$server['env'] ?></td>
+                        <td class="driver"><?=$server['driver'] ?></td>
+                        <td class="host"><?=$server['host'] ?></td>
+                        <td class="port"><?=$server['port'] ?></td>
+                        <td class="user"><?=$server['user'] ?></td>
+                        <td class="password" style="color: white"><?=$server['password'] ?></td>
                     </tr>
                     <?
                 }
@@ -127,21 +133,11 @@ class AdminerLoginServers {
 		<table cellspacing="0">
 
 			<tr><th><?php echo lang('Server'); ?><td>
-			<select name="auth[server]" style="float: left;margin-right: 15px;">
-				<?php
-				foreach ($this->servers as $name=>$server){
-					?>
-					<option value="<?=$server['ip'] ?>" data-driver="<?=$server['driver']?>" ><?=$name ?></option>
-					<?
-				}
-				?>
-			</select>
-			<input name="local-mysql" type="button" value="Local Mysql" style="margin-right: 10px;">
-			<input name="local-pgsql" type="button" value="Local Pgsql">
+                    <input name="auth[server]" value="" title="hostname[:port]" placeholder="localhost" autocapitalize="off">
 
 			<tr><th><?php echo lang('Driver'); ?><td>
-			<input name="auth[driver]" value="server" style="display: none;" >
-			<h4 id="selected_driver">MySQL</h4>
+                    <select name="auth[driver]"><option value="server" selected="">MySQL</option><option value="sqlite">SQLite 3</option><option value="sqlite2">SQLite 2</option><option value="pgsql">PostgreSQL</option><option value="oracle">Oracle</option><option value="mssql">MS SQL</option><option value="firebird">Firebird (alpha)</option><option value="simpledb">SimpleDB</option><option value="mongo">MongoDB (beta)</option><option value="elastic">Elasticsearch (beta)</option>
+                    </select>
 
 			<tr><th><?php echo lang('Username'); ?><td><input id="username" name="auth[username]" value="<?php echo h($_GET["username"]);  ?>">
 			<tr><th><?php echo lang('Password'); ?><td><input type="password" name="auth[password]">

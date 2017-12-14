@@ -30,6 +30,8 @@ class AdminerLoginServers {
 	}
 
 	function init_file_connections(){
+
+
         $json = file_get_contents($this->server_list_file);
         $jsonIterator = new RecursiveIteratorIterator(
            new RecursiveArrayIterator(json_decode($json, TRUE)),

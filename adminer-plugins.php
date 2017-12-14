@@ -2,7 +2,6 @@
 function adminer_object() {
     // required to run any plugin
     include_once "./plugins/plugin.php";
-    include_once "./server_list.php";
 
     // autoloader
     foreach (glob("plugins/*.php") as $filename) {
@@ -20,7 +19,7 @@ function adminer_object() {
 //          new AdminerLoginTable,
           new AdminerScripts(array("http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")),
           new AdminerTablesFilter(),
-          new AdminerLoginServers($SERVER_LIST)
+          new AdminerLoginServers()
     );
 
     /* It is possible to combine customization and plugins:

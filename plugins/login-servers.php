@@ -15,9 +15,18 @@ class AdminerLoginServers {
 	* @param string
 	*/
 
-	function __construct($servers) {
-		$this->servers = $servers;
+	function __construct() {
+        // Todo:
+		$this->servers = $this->read_from_file();
 	}
+
+	function read_from_file(){
+
+	    return array(array('host'=>"Fiveldb", "driver"=>"mysql", "port"=>"3601", "user"=>"root",
+            "password"=>"123123"),
+            array('host'=>"Fiveldb", "driver"=>"mysql", "port"=>"3601", "user"=>"root",
+                "password"=>"123123"));
+    }
 
 	function head() {
 		foreach ($this->scripts as $script) {
@@ -69,6 +78,7 @@ class AdminerLoginServers {
 			</tr>
 			<tr>
 				<td><input type="submit" class="connect_to_db" value="Fivel db" style="background: yellowgreen; width: 100%"></td>
+                <td>Env</td>
 				<td>Driver</td>
 				<td>3601</td>
 				<td colspan="2">user</td>
@@ -76,6 +86,13 @@ class AdminerLoginServers {
 			</tr>
 			<tr>
 				<td><input type="text" value="" name="host" placeholder="Host"></td>
+                <td>
+                    <select name="env">
+                        <option value="local" selected="">Local</option>
+                        <option value="dev">Dev</option>
+                        <option value="prod">Prod</option>
+                    </select>
+                </td>
 				<td>
 					<select name="driver">
 						<option value="server" selected="">MySQL</option>

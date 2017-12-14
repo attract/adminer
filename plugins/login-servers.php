@@ -40,8 +40,52 @@ class AdminerLoginServers {
 	
 	function loginForm() {
 		?>
-<div style="width: 1500px">
-	<div style="float: left">
+<div >
+    <div style="margin-bottom: 20px;">
+        <table>
+            <tr>
+                <th style="padding: 5px" colspan="5">Быстрое подключение</th>
+            </tr>
+            <tr>
+                <td><input type="submit" class="connect_to_db" value="Fivel db" style="background: yellowgreen; width: 100%"></td>
+                <td>Env</td>
+                <td>Driver</td>
+                <td>3601</td>
+                <td colspan="2">user</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="text" value="" name="host" placeholder="Host"></td>
+                <td>
+                    <select name="env">
+                        <option value="local" selected="">Local</option>
+                        <option value="dev">Dev</option>
+                        <option value="prod">Prod</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="driver">
+                        <option value="server" selected="">MySQL</option>
+                        <option value="sqlite">SQLite 3</option>
+                        <option value="sqlite2">SQLite 2</option>
+                        <option value="pgsql">PostgreSQL</option>
+                        <option value="oracle">Oracle</option>
+                        <option value="mssql">MS SQL</option>
+                        <option value="firebird">Firebird (alpha)</option>
+                        <option value="simpledb">SimpleDB</option>
+                        <option value="mongo">MongoDB (beta)</option>
+                        <option value="elastic">Elasticsearch (beta)</option>
+                    </select>
+                </td>
+                <td><input type="text" value="" name="port" placeholder="Port"></td>
+                <td><input type="text" value="" name="user" placeholder="User"></td>
+                <td><input type="text" value="" name="password" placeholder="Password"></td>
+                <td><input type="submit" class="connect_to_db" value="Добавить" ></td>
+            </tr>
+        </table>
+    </div>
+
+	<div >
 		<table cellspacing="0">
 
 			<tr><th><?php echo lang('Server'); ?><td>
@@ -71,49 +115,6 @@ class AdminerLoginServers {
 		</p>
 	</div>
 
-	<div style="margin-left: 10px; float: left">
-		<table>
-			<tr>
-				<th style="padding: 5px" colspan="5">Быстрое подключение</th>
-			</tr>
-			<tr>
-				<td><input type="submit" class="connect_to_db" value="Fivel db" style="background: yellowgreen; width: 100%"></td>
-                <td>Env</td>
-				<td>Driver</td>
-				<td>3601</td>
-				<td colspan="2">user</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><input type="text" value="" name="host" placeholder="Host"></td>
-                <td>
-                    <select name="env">
-                        <option value="local" selected="">Local</option>
-                        <option value="dev">Dev</option>
-                        <option value="prod">Prod</option>
-                    </select>
-                </td>
-				<td>
-					<select name="driver">
-						<option value="server" selected="">MySQL</option>
-						<option value="sqlite">SQLite 3</option>
-						<option value="sqlite2">SQLite 2</option>
-						<option value="pgsql">PostgreSQL</option>
-						<option value="oracle">Oracle</option>
-						<option value="mssql">MS SQL</option>
-						<option value="firebird">Firebird (alpha)</option>
-						<option value="simpledb">SimpleDB</option>
-						<option value="mongo">MongoDB (beta)</option>
-						<option value="elastic">Elasticsearch (beta)</option>
-					</select>
-				</td>
-				<td><input type="text" value="" name="port" placeholder="Port"></td>
-				<td><input type="text" value="" name="user" placeholder="User"></td>
-				<td><input type="text" value="" name="password" placeholder="Password"></td>
-				<td><input type="submit" class="connect_to_db" value="Добавить" ></td>
-			</tr>
-		</table>
-	</div>
 </div>
 <?php
 		return true;

@@ -25,8 +25,7 @@ class AdminerLoginServers {
 	*/
 
 	function __construct() {
-        // Todo:
-		$this->servers = $this->init_file_connections();
+        $this->servers = $this->init_file_connections();
         $this->env = array(
             array('value'=>'local', 'title'=>'Local'),
             array('value'=>'dev', 'title'=>'Dev'),
@@ -35,7 +34,7 @@ class AdminerLoginServers {
 	}
 
 	function init_file_connections(){
-        if(!is_file($this->server_list_file)){
+	    if(!is_file($this->server_list_file)){
             $this->save_connections_to_file();
         }
         $json = file_get_contents($this->server_list_file);
@@ -49,7 +48,6 @@ class AdminerLoginServers {
                 array_push($this->all_connections, $val);
             }
         }
-        //$this->add_connect();
 
         return $this->all_connections;
     }
@@ -96,8 +94,12 @@ class AdminerLoginServers {
         }
     }
 
+
+
     function save_connections_to_file() {
         $fp = fopen($this->server_list_file, 'w');
+
+        usort($this->all_connections, function ($a, $b) { return strcmp($a["name"], $b["name"]); });
         fwrite($fp, json_encode($this->all_connections));
         fclose($fp);
     }
@@ -219,10 +221,14 @@ class AdminerLoginServers {
 		<p>
 				<div><? echo checkbox("auth[permanent]", 1, $_COOKIE["adminer_permanent"], lang('Permanent login')) . "\n"; ?></div>
 				<br>
-				<input type="submit" style="width: 300px;height: 30px;" value="<?php echo lang('Login'); ?>">
+				<input id="submit_connect_button" type="submit" style="width: 300px;height: 30px;" value="<?php echo lang('Login'); ?>">
 		</p>
 	</div>
-
+    <style>
+        #connections td input{
+            width: 110px;
+        }
+    </style>
 </div>
 <?php
 		return true;

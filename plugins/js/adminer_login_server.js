@@ -27,7 +27,7 @@ $(function () {
        $("select[name='auth[driver]'] option[value='"+tr.find('.driver').text()+"']").prop('selected', true);
 
        // Sybmit form
-       $('input[type=submit][value="Войти"]').click();
+       $('input#submit_connect_button').click();
    });
 
     // CRUD for connections

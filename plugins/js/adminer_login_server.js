@@ -59,8 +59,14 @@ $(function () {
         var name = tr.find('input[name=name]').val();
 
         if(confirm("Вы действительно хотите удалить подключение `"+name+"`?")) {
-            $.post('/remove_connect/' + tr.find('input[name=name]').val(), function (data) {
-                alert(data);
+            $.post('/route.php?method=delete_connect',
+                {'name': tr.find('input[name=name]').val()}, function (data) {
+                if(data=='1'){
+                    location.href = "";
+                }
+                else{
+                    alert('Can not delete');
+                }
             }, 'json')
         }
     });

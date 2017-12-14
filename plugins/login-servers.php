@@ -68,7 +68,7 @@ class AdminerLoginServers {
                 $is_added = true;
             }
         }
-        if($is_added === false){
+        if($is_added === false AND $new_connect['name']){
             array_push($this->all_connections, $new_connect);
             $this->save_connections_to_file();
             echo 1;
@@ -79,9 +79,21 @@ class AdminerLoginServers {
     }
 
     function delete_connect(){
-
-        array_push($this->all_connections, $new_connect);
-        $this->save_connections_to_file();
+        $connect_delete_name = $_POST["name"];
+        $need_delete_key = false;
+        foreach ($this->all_connections as $key => $val) {
+            if ($val['name'] == $connect_delete_name) {
+                $need_delete_key = $key;
+            }
+        }
+        if($need_delete_key !== false) {
+            unset($this->all_connections[$need_delete_key]);
+            $this->save_connections_to_file();
+            echo 1;
+        }
+        else{
+            echo 0;
+        }
     }
 
     function save_connections_to_file() {

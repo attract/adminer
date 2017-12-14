@@ -35,7 +35,7 @@ $(function () {
         e.preventDefault();
         var tr = $(this).closest('tr');
 
-        $.post('/add_connect', {
+        $.post('/route.php?method=add_connect', {
             "name": tr.find('input[name=name]').val(),
             "host": tr.find('input[name=host]').val(),
             "env": tr.find('select[name=env]').val(),
@@ -44,7 +44,12 @@ $(function () {
             "password": tr.find('input[name=password]').val(),
             "driver": tr.find('select[name=driver]').val()
         }, function (data) {
-            alert(data);
+            if(data=='1'){
+                location.href = "";
+            }
+            else{
+                alert('Already addeed');
+            }
         }, 'json')
     });
 

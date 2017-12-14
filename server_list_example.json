@@ -1,0 +1,1 @@
+[{"name":"Fivel","host":"148.251.99.194","env":"dev","driver":"pgsql","port":"15432","user":"postgres","password":"1234qwer"},{"name":"Fiveldb","host":"127.0.0.1","env":"dev","driver":"server","port":"3601","user":"root","password":"123123"}]

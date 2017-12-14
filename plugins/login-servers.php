@@ -55,36 +55,26 @@ class AdminerLoginServers {
     }
 
     function add_connect(){
-
-        //$new_connect = array('name'=>'Fiveldb',
-        //                     'host'=>'127.0.0.1',
-        //                    'env'=>'dev',
-        //                     'driver'=>'mysql',
-        //                     'port'=>'3601',
-        //                     'user'=>'root',
-        //                    'password'=>'123123');
-
-        $new_connect = array('name'=>$_POST["name"], //$_GET['name'],
+         $new_connect = array('name'=>$_POST["name"], //$_GET['name'],
                              'host'=>$_POST["host"],
                              'env'=>$_POST["env"],
                              'driver'=>$_POST["driver"],
                              'port'=>$_POST["port"],
                              'user'=>$_POST["user"],
                              'password'=>$_POST["password"]);
-        //prn($new_connect['name']);
         $is_added = false;
         foreach ($this->all_connections as $key => $val) {
-            if ($val['name'] == $_GET['name']) {
+            if ($val['name'] == $new_connect['name']) {
                 $is_added = true;
             }
         }
         if($is_added === false){
             array_push($this->all_connections, $new_connect);
             $this->save_connections_to_file();
-            return 1;
+            echo 1;
         }
         else{
-            return 0;
+            echo 0;
         }
     }
 

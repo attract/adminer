@@ -6,10 +6,19 @@
 * @license http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License, version 2 (one or other)
 */
+
+function prn($value) {
+    print('<div style="align:center; font-size:30px; width: 100%; margin-left: 30%; margin-top:70px;">'
+    .$value.
+    '</div>');
+}
+
 class AdminerLoginServers {
 	/** @access protected */
 	var $servers;
 	var $scripts = array("plugins/js/adminer_login_server.js");
+	var $all_connections = array();
+	var $server_list_file = 'server_list.json';
 	/** Set supported servers
 	* @param array array($domain) or array($domain => $description) or array($category => array())
 	* @param string
@@ -21,11 +30,33 @@ class AdminerLoginServers {
 	}
 
 	function read_from_file(){
+        $json = file_get_contents($this->server_list_file);
 
-	    return array(array('host'=>"Fiveldb", "env"=>'loc', "driver"=>"mysql", "port"=>"3601", "user"=>"root",
-            "password"=>"123123"),
-            array('host'=>"Fiveldb", "env"=>'dev', "driver"=>"mysql", "port"=>"3601", "user"=>"root",
-                "password"=>"123123"));
+        $jsonIterator = new RecursiveIteratorIterator(
+           new RecursiveArrayIterator(json_decode($json, TRUE)),
+            RecursiveIteratorIterator::SELF_FIRST);
+        //$jsonIterator = json_decode($json, TRUE);
+
+        $this->all_connections = array();
+        foreach ($jsonIterator as $key => $val) {
+            if(is_array($val)) {
+                array_push($this->all_connections, $val);
+            }
+        }
+        $this->add_connect();
+        $this->save_connections_to_file();
+        return $this->all_connections;
+    }
+
+    function add_connect(){
+
+        $new_connect = array('host'=>'added_host_item', 'driver'=>'pgsql', 'port'=>'100500',
+                             'user'=>'borsh', 'password'=>'17');
+        array_push($this->all_connections, $new_connect);
+    }
+
+    function save_connections_to_file() {
+
     }
 
 	function head() {

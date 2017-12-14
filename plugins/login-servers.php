@@ -163,6 +163,7 @@ class AdminerLoginServers {
                         <?
                     }
                 ?>
+            </tbody>
                 <tr>
                     <td><input type="text" value="" name="name" placeholder="Name"></td>
                     <td>
@@ -196,7 +197,7 @@ class AdminerLoginServers {
                     <td><input type="text" value="" name="password" placeholder="Password"></td>
                     <td><input type="button" class="add_connect" value="Добавить" ></td>
                 </tr>
-            </tbody>
+
         </table>
     </div>
 

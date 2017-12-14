@@ -1,12 +1,23 @@
 
 $(function () {
 
-   $('select[name="auth[server]"]').on('change', function () {
-       var driver = $('option:selected', this).attr('data-driver');
-       $("input[name='auth[driver]']").val(driver);
-       $('#selected_driver').html(driver);
+    // Filters
+   $('select[name="filter_env"]').on('change', function () {
+       var value = $(this).val();
+       if(value){
+           $('#connections tbody tr').each(function (index) {
+               if($(this).find('.env').text() == value){
+                   $(this).show();
+               } else {
+                   $(this).hide();
+               }
+           });
+       } else {
+            $('#connections tbody tr').show();
+       }
    });
 
+    // Connect for DB
    $(".connect_to_db").on('click', function (e) {
        e.preventDefault();
        var tr = $(this).closest('tr');
@@ -19,18 +30,33 @@ $(function () {
        $('input[type=submit][value="Войти"]').click();
    });
 
+    // CRUD for connections
     $('.add_connect').on('click', function (e) {
         e.preventDefault();
         var tr = $(this).closest('tr');
 
         $.post('/add_connect', {
-            "host": tr.find('.host').text(),
-            "port": tr.find('.port').text(),
-            "user": tr.find('.user').text(),
-            "password": tr.find('.password').text(),
-            "driver": tr.find('.driver').text(),
-        }, function () {
-
+            "name": tr.find('input[name=name]').val(),
+            "host": tr.find('input[name=host]').val(),
+            "env": tr.find('select[name=env]').val(),
+            "port": tr.find('input[name=port]').val(),
+            "user": tr.find('input[name=user]').val(),
+            "password": tr.find('input[name=password]').val(),
+            "driver": tr.find('select[name=driver]').val()
+        }, function (data) {
+            alert(data);
         }, 'json')
+    });
+
+    $('.remove_connect').on('click', function (e) {
+        e.preventDefault();
+        var tr = $(this).closest('tr');
+        var name = tr.find('input[name=name]').val();
+
+        if(confirm("Вы действительно хотите удалить подключение `"+name+"`?")) {
+            $.post('/remove_connect/' + tr.find('input[name=name]').val(), function (data) {
+                alert(data);
+            }, 'json')
+        }
     });
 });

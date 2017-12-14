@@ -27,6 +27,11 @@ class AdminerLoginServers {
 	function __construct() {
         // Todo:
 		$this->servers = $this->init_file_connections();
+        $this->env = array(
+            array('value'=>'local', 'title'=>'Local'),
+            array('value'=>'dev', 'title'=>'Dev'),
+            array('value'=>'prod', 'title'=>'Prod'),
+        );
 	}
 
 	function init_file_connections(){
@@ -46,11 +51,6 @@ class AdminerLoginServers {
         //$this->add_connect();
 
         return $this->all_connections;
-
-        return array(array('name'=>"Fiveldb", 'host'=>"148.251.99.194", "env"=>'loc', "driver"=>"pgsql", "port"=>"15432", "user"=>"root",
-            "password"=>"123123"),
-            array('name'=>"Fiveldb", 'host'=>"127.0.0.1", "env"=>'dev', "driver"=>"server", "port"=>"3601", "user"=>"root",
-                "password"=>"123123"));
     }
 
     function add_connect(){
@@ -92,54 +92,89 @@ class AdminerLoginServers {
 		?>
 <div >
     <div style="margin-bottom: 20px;">
-        <table style="border: 1px dotted darkblue; padding: 5px;">
-            <tr>
-                <th style="padding: 5px; font-style: italic;" colspan="5" >Быстрое подключение</th>
-            </tr>
-            <?
-                foreach ($this->servers as $server) {
-                    ?>
-                    <tr>
-                        <td><input type="button" class="connect_to_db" value="<?=$server['name'] ?>"
-                                   style="background: yellowgreen; width: 100%"></td>
-                        <td class="env"><?=$server['env'] ?></td>
-                        <td class="driver"><?=$server['driver'] ?></td>
-                        <td class="host"><?=$server['host'] ?></td>
-                        <td class="port"><?=$server['port'] ?></td>
-                        <td class="user"><?=$server['user'] ?></td>
-                        <td class="password" style="color: white"><?=$server['password'] ?></td>
-                    </tr>
-                    <?
-                }
-            ?>
-            <tr>
-                <td><input type="text" value="" name="host" placeholder="Host"></td>
-                <td>
-                    <select name="env">
-                        <option value="local" selected="">Local</option>
-                        <option value="dev">Dev</option>
-                        <option value="prod">Prod</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="driver">
-                        <option value="server" selected="">MySQL</option>
-                        <option value="sqlite">SQLite 3</option>
-                        <option value="sqlite2">SQLite 2</option>
-                        <option value="pgsql">PostgreSQL</option>
-                        <option value="oracle">Oracle</option>
-                        <option value="mssql">MS SQL</option>
-                        <option value="firebird">Firebird (alpha)</option>
-                        <option value="simpledb">SimpleDB</option>
-                        <option value="mongo">MongoDB (beta)</option>
-                        <option value="elastic">Elasticsearch (beta)</option>
-                    </select>
-                </td>
-                <td><input type="text" value="" name="port" placeholder="Port"></td>
-                <td><input type="text" value="" name="user" placeholder="User"></td>
-                <td><input type="text" value="" name="password" placeholder="Password"></td>
-                <td><input type="button" class="add_connect" value="Добавить" ></td>
-            </tr>
+        <table id="connections" style="border: 1px dotted darkblue; padding: 5px;">
+            <thead>
+                <tr>
+                    <th style="padding: 5px; font-style: italic;" colspan="8" >Быстрое подключение</th>
+                </tr>
+                <tr style="background-color: gainsboro;">
+                    <td>
+                        <input name="filter_name" type="text" value="">
+                    </td>
+                    <td>
+                        <select name="filter_env">
+                            <option value="" selected="">Все</option>
+                            <?
+                            foreach ($this->env as $env) {
+                                ?>
+
+                                <option value="<?=$env['value'] ?>" ><?=$env['title'] ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <?
+                    foreach ($this->servers as $server) {
+                        ?>
+                        <tr>
+                            <td><input type="button" class="connect_to_db" name="name" value="<?=$server['name'] ?>"
+                                       style="background: yellowgreen; width: 100%"></td>
+                            <td class="env"><?=$server['env'] ?></td>
+                            <td class="driver"><?=$server['driver'] ?></td>
+                            <td class="host"><?=$server['host'] ?></td>
+                            <td class="port"><?=$server['port'] ?></td>
+                            <td class="user"><?=$server['user'] ?></td>
+                            <td class="password" style="color: transparent"><?=$server['password'] ?></td>
+                            <td><input type="button" class="remove_connect"
+                                       style="background: indianred; color: whitesmoke; width: 100%" value="Удалить" ></td>
+                        </tr>
+                        <?
+                    }
+                ?>
+                <tr>
+                    <td><input type="text" value="" name="name" placeholder="Name"></td>
+                    <td>
+                        <select name="env">
+                            <?
+                            foreach ($this->env as $env) {
+                                ?>
+                                <option value="<?=$env['value'] ?>" ><?=$env['title'] ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="driver">
+                            <option value="server" selected="">MySQL</option>
+                            <option value="sqlite">SQLite 3</option>
+                            <option value="sqlite2">SQLite 2</option>
+                            <option value="pgsql">PostgreSQL</option>
+                            <option value="oracle">Oracle</option>
+                            <option value="mssql">MS SQL</option>
+                            <option value="firebird">Firebird (alpha)</option>
+                            <option value="simpledb">SimpleDB</option>
+                            <option value="mongo">MongoDB (beta)</option>
+                            <option value="elastic">Elasticsearch (beta)</option>
+                        </select>
+                    </td>
+                    <td><input type="text" value="" name="host" placeholder="Host"></td>
+                    <td><input type="text" value="" name="port" placeholder="Port"></td>
+                    <td><input type="text" value="" name="user" placeholder="User"></td>
+                    <td><input type="text" value="" name="password" placeholder="Password"></td>
+                    <td><input type="button" class="add_connect" value="Добавить" ></td>
+                </tr>
+            </tbody>
         </table>
     </div>
 

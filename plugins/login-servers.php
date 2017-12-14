@@ -26,16 +26,14 @@ class AdminerLoginServers {
 
 	function __construct() {
         // Todo:
-		$this->servers = $this->read_from_file();
+		$this->servers = $this->init_file_connections();
 	}
 
-	function read_from_file(){
+	function init_file_connections(){
         $json = file_get_contents($this->server_list_file);
-
         $jsonIterator = new RecursiveIteratorIterator(
            new RecursiveArrayIterator(json_decode($json, TRUE)),
             RecursiveIteratorIterator::SELF_FIRST);
-        //$jsonIterator = json_decode($json, TRUE);
 
         $this->all_connections = array();
         foreach ($jsonIterator as $key => $val) {
@@ -43,8 +41,8 @@ class AdminerLoginServers {
                 array_push($this->all_connections, $val);
             }
         }
-        $this->add_connect();
-        $this->save_connections_to_file();
+        //$this->add_connect();
+
         return $this->all_connections;
 
         return array(array('name'=>"Fiveldb", 'host'=>"148.251.99.194", "env"=>'loc', "driver"=>"pgsql", "port"=>"15432", "user"=>"root",
@@ -55,13 +53,27 @@ class AdminerLoginServers {
 
     function add_connect(){
 
-        $new_connect = array('host'=>'added_host_item', 'driver'=>'pgsql', 'port'=>'100500',
-                             'user'=>'borsh', 'password'=>'17');
+        $new_connect = array('name'=>'Fiveldb',
+                             'host'=>'127.0.0.1',
+                             'env'=>'dev',
+                             'driver'=>'mysql',
+                             'port'=>'3601',
+                             'user'=>'root',
+                             'password'=>'123123');
         array_push($this->all_connections, $new_connect);
+        $this->save_connections_to_file();
+    }
+
+    function delete_connect(){
+
+        array_push($this->all_connections, $new_connect);
+        $this->save_connections_to_file();
     }
 
     function save_connections_to_file() {
-
+        $fp = fopen($this->server_list_file, 'w');
+        fwrite($fp, json_encode($this->all_connections));
+        fclose($fp);
     }
 
 	function head() {

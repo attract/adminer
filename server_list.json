@@ -1,0 +1,23 @@
+{
+    "Fivel main": {
+        "host": "Fiveldb",
+        "driver": "mysql",
+        "port": "3601",
+        "user": "root",
+        "password": "123123"
+    },
+    "Fivel second": {
+        "host": "148.251.99.194",
+        "driver": "postgre",
+        "port": "3601",
+        "user": "root2",
+        "password": "123123"
+    },
+    "Food truck": {
+        "host": "Food-truck",
+        "driver": "postgre",
+        "port": "7777",
+        "user": "root3",
+        "password": "223344"
+    }
+}

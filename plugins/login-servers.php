@@ -22,7 +22,7 @@ class AdminerLoginServers {
 
 	function read_from_file(){
 
-	    return array(array('name'=>"Fiveldb", 'host'=>"127.0.0.1", "env"=>'loc', "driver"=>"mysql", "port"=>"3601", "user"=>"root",
+	    return array(array('name'=>"Fiveldb", 'host'=>"148.251.99.194", "env"=>'loc', "driver"=>"pgsql", "port"=>"15432", "user"=>"root",
             "password"=>"123123"),
             array('name'=>"Fiveldb", 'host'=>"127.0.0.1", "env"=>'dev', "driver"=>"mysql", "port"=>"3601", "user"=>"root",
                 "password"=>"123123"));

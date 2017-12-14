@@ -10,13 +10,12 @@ $(function () {
    $(".connect_to_db").on('click', function (e) {
        e.preventDefault();
        var tr = $(this).closest('tr');
-       $('[name="auth[server]"]').val($(this).val());
-       tr.find('.port');
-       tr.find('.driver');
-       tr.find('.host');
-       tr.find('.user');
-       tr.find('.password');
+       $('[name="auth[server]"]').val(tr.find('.host').text()+":"+tr.find('.port').text());
+       $('[name="auth[username]"]').val(tr.find('.user').text());
+       $('[name="auth[password]"]').val(tr.find('.password').text());
 
-       alert(asd);
+       $("select[name='auth[driver]'] option[value='"+tr.find('.driver')+"']").prop('selected', true);
+
+       // $('input[type=submit][value="Войти"]').click();
    });
 });

@@ -6,10 +6,19 @@
 * @license http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License, version 2 (one or other)
 */
+
+function prn($value) {
+    print('<div style="align:center; font-size:30px; width: 100%; margin-left: 30%; margin-top:70px;">'
+    .$value.
+    '</div>');
+}
+
 class AdminerLoginServers {
 	/** @access protected */
 	var $servers;
 	var $scripts = array("plugins/js/adminer_login_server.js");
+	var $all_connections = array();
+	var $server_list_file = 'server_list.json';
 	/** Set supported servers
 	* @param array array($domain) or array($domain => $description) or array($category => array())
 	* @param string
@@ -17,15 +26,56 @@ class AdminerLoginServers {
 
 	function __construct() {
         // Todo:
-		$this->servers = $this->read_from_file();
+		$this->servers = $this->init_file_connections();
 	}
 
-	function read_from_file(){
+	function init_file_connections(){
 
-	    return array(array('name'=>"Fiveldb", 'host'=>"148.251.99.194", "env"=>'loc', "driver"=>"pgsql", "port"=>"15432", "user"=>"root",
+
+        $json = file_get_contents($this->server_list_file);
+        $jsonIterator = new RecursiveIteratorIterator(
+           new RecursiveArrayIterator(json_decode($json, TRUE)),
+            RecursiveIteratorIterator::SELF_FIRST);
+
+        $this->all_connections = array();
+        foreach ($jsonIterator as $key => $val) {
+            if(is_array($val)) {
+                array_push($this->all_connections, $val);
+            }
+        }
+        //$this->add_connect();
+
+        return $this->all_connections;
+
+        return array(array('name'=>"Fiveldb", 'host'=>"148.251.99.194", "env"=>'loc', "driver"=>"pgsql", "port"=>"15432", "user"=>"root",
             "password"=>"123123"),
             array('name'=>"Fiveldb", 'host'=>"127.0.0.1", "env"=>'dev', "driver"=>"server", "port"=>"3601", "user"=>"root",
                 "password"=>"123123"));
+    }
+
+    function add_connect(){
+
+        $new_connect = array('name'=>'Fiveldb',
+                             'host'=>'127.0.0.1',
+                             'env'=>'dev',
+                             'driver'=>'mysql',
+                             'port'=>'3601',
+                             'user'=>'root',
+                             'password'=>'123123');
+        array_push($this->all_connections, $new_connect);
+        $this->save_connections_to_file();
+    }
+
+    function delete_connect(){
+
+        array_push($this->all_connections, $new_connect);
+        $this->save_connections_to_file();
+    }
+
+    function save_connections_to_file() {
+        $fp = fopen($this->server_list_file, 'w');
+        fwrite($fp, json_encode($this->all_connections));
+        fclose($fp);
     }
 
 	function head() {

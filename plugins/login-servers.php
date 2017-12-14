@@ -22,9 +22,9 @@ class AdminerLoginServers {
 
 	function read_from_file(){
 
-	    return array(array('host'=>"Fiveldb", "driver"=>"mysql", "port"=>"3601", "user"=>"root",
+	    return array(array('host'=>"Fiveldb", "env"=>'loc', "driver"=>"mysql", "port"=>"3601", "user"=>"root",
             "password"=>"123123"),
-            array('host'=>"Fiveldb", "driver"=>"mysql", "port"=>"3601", "user"=>"root",
+            array('host'=>"Fiveldb", "env"=>'dev', "driver"=>"mysql", "port"=>"3601", "user"=>"root",
                 "password"=>"123123"));
     }
 
@@ -42,18 +42,25 @@ class AdminerLoginServers {
 		?>
 <div >
     <div style="margin-bottom: 20px;">
-        <table>
+        <table style="border: 1px dotted darkblue; padding: 5px;">
             <tr>
-                <th style="padding: 5px" colspan="5">Быстрое подключение</th>
+                <th style="padding: 5px; font-style: italic;" colspan="5" >Быстрое подключение</th>
             </tr>
-            <tr>
-                <td><input type="submit" class="connect_to_db" value="Fivel db" style="background: yellowgreen; width: 100%"></td>
-                <td>Env</td>
-                <td>Driver</td>
-                <td>3601</td>
-                <td colspan="2">user</td>
-                <td></td>
-            </tr>
+            <?
+                foreach ($this->servers as $server) {
+                    ?>
+                    <tr>
+                        <td><input type="submit" class="connect_to_db" value="<?=$server['host'] ?>"
+                                   style="background: yellowgreen; width: 100%"></td>
+                        <td><?=$server['env'] ?></td>
+                        <td><?=$server['driver'] ?></td>
+                        <td><?=$server['port'] ?></td>
+                        <td><?=$server['user'] ?></td>
+                        <td></td>
+                    </tr>
+                    <?
+                }
+            ?>
             <tr>
                 <td><input type="text" value="" name="host" placeholder="Host"></td>
                 <td>

@@ -24,7 +24,7 @@ class AdminerLoginServers {
 
 	    return array(array('name'=>"Fiveldb", 'host'=>"148.251.99.194", "env"=>'loc', "driver"=>"pgsql", "port"=>"15432", "user"=>"root",
             "password"=>"123123"),
-            array('name'=>"Fiveldb", 'host'=>"127.0.0.1", "env"=>'dev', "driver"=>"mysql", "port"=>"3601", "user"=>"root",
+            array('name'=>"Fiveldb", 'host'=>"127.0.0.1", "env"=>'dev', "driver"=>"server", "port"=>"3601", "user"=>"root",
                 "password"=>"123123"));
     }
 
@@ -88,7 +88,7 @@ class AdminerLoginServers {
                 <td><input type="text" value="" name="port" placeholder="Port"></td>
                 <td><input type="text" value="" name="user" placeholder="User"></td>
                 <td><input type="text" value="" name="password" placeholder="Password"></td>
-                <td><input type="submit" class="connect_to_db" value="Добавить" ></td>
+                <td><input type="button" class="add_connect" value="Добавить" ></td>
             </tr>
         </table>
     </div>

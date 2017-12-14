@@ -13,9 +13,24 @@ $(function () {
        $('[name="auth[server]"]').val(tr.find('.host').text()+":"+tr.find('.port').text());
        $('[name="auth[username]"]').val(tr.find('.user').text());
        $('[name="auth[password]"]').val(tr.find('.password').text());
+       $("select[name='auth[driver]'] option[value='"+tr.find('.driver').text()+"']").prop('selected', true);
 
-       $("select[name='auth[driver]'] option[value='"+tr.find('.driver')+"']").prop('selected', true);
-
-       // $('input[type=submit][value="Войти"]').click();
+       // Sybmit form
+       $('input[type=submit][value="Войти"]').click();
    });
+
+    $('.add_connect').on('click', function (e) {
+        e.preventDefault();
+        var tr = $(this).closest('tr');
+
+        $.post('/add_connect', {
+            "host": tr.find('.host').text(),
+            "port": tr.find('.port').text(),
+            "user": tr.find('.user').text(),
+            "password": tr.find('.password').text(),
+            "driver": tr.find('.driver').text(),
+        }, function () {
+
+        }, 'json')
+    });
 });

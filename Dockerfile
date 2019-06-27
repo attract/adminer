@@ -4,7 +4,7 @@ MAINTAINER Christian Lück <christian@lueck.tv>
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
   nginx supervisor php5-fpm php5-cli \
   php5-pgsql php5-mysql php5-sqlite php5-mssql \
-  wget
+  wget ssh mc
 
 # add adminer as the only nginx site
 ADD adminer.nginx.conf /etc/nginx/sites-available/adminer

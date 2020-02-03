@@ -25,6 +25,7 @@ $(function () {
        $('[name="auth[username]"]').val(tr.find('.user').text());
        $('[name="auth[password]"]').val(tr.find('.password').text());
        $("select[name='auth[driver]'] option[value='"+tr.find('.driver').text()+"']").prop('selected', true);
+       $('[name="auth[db]"]').val(tr.find('.database').text());
 
        // Sybmit form
        $('input#submit_connect_button').click();
@@ -39,6 +40,7 @@ $(function () {
             "name": tr.find('input[name=name]').val(),
             "host": tr.find('input[name=host]').val(),
             "env": tr.find('select[name=env]').val(),
+            "database": tr.find('input[name=database]').val(),
             "port": tr.find('input[name=port]').val(),
             "user": tr.find('input[name=user]').val(),
             "password": tr.find('input[name=password]').val(),

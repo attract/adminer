@@ -57,6 +57,7 @@ class AdminerLoginServers {
                              'host'=>$_POST["host"],
                              'env'=>$_POST["env"],
                              'driver'=>$_POST["driver"],
+                             'database'=>$_POST["database"],
                              'port'=>$_POST["port"],
                              'user'=>$_POST["user"],
                              'password'=>$_POST["password"]);
@@ -113,7 +114,7 @@ class AdminerLoginServers {
 	function login($login, $password) {
 		return;
 	}
-	
+
 	function loginForm() {
 		?>
 <div >
@@ -146,6 +147,7 @@ class AdminerLoginServers {
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                 </tr>
             </thead>
             <tbody>
@@ -158,6 +160,7 @@ class AdminerLoginServers {
                             <td class="env"><?=$server['env'] ?></td>
                             <td class="driver"><?=$server['driver'] ?></td>
                             <td class="host"><?=$server['host'] ?></td>
+                            <td class="database"><?=$server['database'] ?></td>
                             <td class="port"><?=$server['port'] ?></td>
                             <td class="user"><?=$server['user'] ?></td>
                             <td class="password" style="color: transparent"><?=$server['password'] ?></td>
@@ -196,6 +199,7 @@ class AdminerLoginServers {
                         </select>
                     </td>
                     <td><input type="text" value="" name="host" placeholder="Host"></td>
+                    <td><input type="text" value="" name="database" placeholder="Database"></td>
                     <td><input type="text" value="" name="port" placeholder="Port"></td>
                     <td><input type="text" value="" name="user" placeholder="User"></td>
                     <td><input type="text" value="" name="password" placeholder="Password"></td>
@@ -217,6 +221,7 @@ class AdminerLoginServers {
 
 			<tr><th><?php echo lang('Username'); ?><td><input id="username" name="auth[username]" value="<?php echo h($_GET["username"]);  ?>">
 			<tr><th><?php echo lang('Password'); ?><td><input type="password" name="auth[password]">
+			<tr><th><?php echo lang('Database'); ?><td><input name="auth[db]" autocapitalize="off" value="">
 		</table>
 		<p>
 				<div><? echo checkbox("auth[permanent]", 1, $_COOKIE["adminer_permanent"], lang('Permanent login')) . "\n"; ?></div>

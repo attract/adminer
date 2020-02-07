@@ -32,3 +32,21 @@ This is a rather common setup following docker's conventions:
 * `-d` will run a detached instance in the background
 * `-p {OutsidePort}:80` will bind the webserver to the given outside port
 * `clue/adminer` the name of this docker image
+
+## Run with tunnel
+
+1. In file `~.ssh/config` add tunnel for an appropriate Host
+
+    Example:
+    ```
+    LocalForward 5031 curbsidekitchendb1-do-user-3004914-0.db.ondigitalocean.com:25060
+    ```
+
+2. Run: 
+    ```
+    $ run.sh ssh_host_name
+    ```
+    Example:
+    ```
+    $ run.sh foodtruck
+    ```
